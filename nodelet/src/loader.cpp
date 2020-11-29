@@ -312,16 +312,16 @@ bool Loader::load(const std::string &name, const std::string& type, const ros::M
   ManagedNodelet* mn = new ManagedNodelet(p, impl_->callback_manager_.get());
   impl_->nodelets_.insert(const_cast<std::string&>(name), mn); // mn now owned by boost::ptr_map
   try {
-	mn->st_queue->disable();
-	mn->mt_queue->disable();
+
+    /* mn->st_queue->disable(); */
+    /* mn->mt_queue->disable(); */
 
     p->init(name, remappings, my_argv, mn->st_queue.get(), mn->mt_queue.get());
 
-	mn->st_queue->enable();
-	mn->mt_queue->enable();
+    /* mn->st_queue->enable(); */
+    /* mn->mt_queue->enable(); */
 
-
-    ROS_DEBUG("Done initing nodelet %s", name.c_str());
+    ROS_INFO("(patched) Done initing nodelet %s", name.c_str());
   } catch(...) {
     Impl::M_stringToNodelet::iterator it = impl_->nodelets_.find(name);
     if (it != impl_->nodelets_.end())
